@@ -4,9 +4,9 @@ import Part from './Part'
 export default function Content (props) {
   return (
     <div>
-      <Part part={props.part1} />
-      <Part part={props.part2} />
-      <Part part={props.part3} />
+      <Part {...props.parts[0]} />
+      <Part {...props.parts[1]} />
+      <Part {...props.parts[2]} />
     </div>
   )
 }
