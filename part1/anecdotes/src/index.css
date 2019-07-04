@@ -1,0 +1,23 @@
+div {
+ display: flex;
+ flex-direction: column;
+ height: 100vh;
+ justify-content: center;
+ align-items: center;
+ font-family: sans-serif;
+ max-width: 500px;
+ margin: 0 auto;
+}
+
+button {
+  display: block;
+  padding: 10px 15px;
+  margin-top: 10px;
+  color: white;
+  background-color: firebrick
+}
+
+p {
+  font-size: 22px;
+  text-align: center;
+}
