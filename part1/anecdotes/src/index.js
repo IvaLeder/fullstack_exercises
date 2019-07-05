@@ -5,6 +5,7 @@ import './index.css'
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [votes, addVote] = useState(Array(anecdotes.length).fill(0))
+  const [popular, setPopular] = useState(0)
 
   const pickRandom = () => {
     const index = Math.floor(Math.random() * anecdotes.length)
@@ -15,14 +16,25 @@ const App = (props) => {
     const newVotes = [...votes]
     newVotes[selected] += 1
     addVote(newVotes)
+    findMostPopular(newVotes)
+  }
+
+  const findMostPopular = (votes) => {
+    const mostVotes = Math.max(...votes)
+    const index = votes.findIndex(el => el === mostVotes)
+    setPopular(index)
   }
 
   return (
     <div>
-      <p>{props.anecdotes[selected]}</p>
+      <h2>Anecdote of the day</h2>
+      <p>{anecdotes[selected]}</p>
       <p>Votes: {votes[selected]}</p>
       <button onClick={pickRandom}>Next anecdote</button>
       <button onClick={handleVote}>Vote</button>
+      <h2>Anecdote with the most votes</h2>
+      <p>{anecdotes[popular]}</p>
+      <p>has {votes[popular]} votes</p>
     </div>
   )
 }
