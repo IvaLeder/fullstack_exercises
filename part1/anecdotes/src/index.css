@@ -12,6 +12,7 @@ div {
 button {
   display: block;
   padding: 10px 15px;
+  width: 200px;
   margin-top: 10px;
   color: white;
   background-color: firebrick

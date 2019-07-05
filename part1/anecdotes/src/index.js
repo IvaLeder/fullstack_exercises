@@ -4,16 +4,25 @@ import './index.css'
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [votes, addVote] = useState(Array(anecdotes.length).fill(0))
 
   const pickRandom = () => {
-    let index = Math.floor(Math.random() * anecdotes.length)
+    const index = Math.floor(Math.random() * anecdotes.length)
     setSelected(index)
+  }
+
+  const handleVote = () => {
+    const newVotes = [...votes]
+    newVotes[selected] += 1
+    addVote(newVotes)
   }
 
   return (
     <div>
       <p>{props.anecdotes[selected]}</p>
+      <p>Votes: {votes[selected]}</p>
       <button onClick={pickRandom}>Next anecdote</button>
+      <button onClick={handleVote}>Vote</button>
     </div>
   )
 }
