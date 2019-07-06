@@ -9,14 +9,20 @@ const Part = props =>
 
 const Content = ({ parts }) => (
   <ul>
-    {parts.map(e => <Part part={e} />)}
+    {parts.map(e => <Part key={e.id} part={e} />)}
   </ul>
 )
+
+const Total = (props) => {
+  const sum = props.parts.reduce((prev, curr) => prev + curr.exercises, 0)
+  return (<p>total of { sum }</p>)
+}
 
 const Course = props => (
   <section>
     <Header course={props.course.name}/>
     <Content parts={props.course.parts} />
+    <Total parts={props.course.parts} />
   </section>
 )
 
