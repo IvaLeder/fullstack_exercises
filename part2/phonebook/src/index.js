@@ -5,12 +5,14 @@ const App = () => {
   const [persons, setPersons] = useState([{ name: 'Arto Hellas' }])
   const [newName, setNewName] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault()
-    setPersons(persons.concat({ name: newName }))
+    persons.find(el => el.name === newName)
+      ? window.alert(`${newName} is already added to phonebook`)
+      : setPersons(persons.concat({ name: newName }))
   }
 
-  const handleNameChange = (e) => {
+  const handleNameChange = e => {
     setNewName(e.target.value)
   }
 
@@ -27,7 +29,9 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map(p => <li key={p.name}>{p.name}</li>)}
+        {persons.map(p => (
+          <li key={p.name}>{p.name}</li>
+        ))}
       </ul>
     </div>
   )
