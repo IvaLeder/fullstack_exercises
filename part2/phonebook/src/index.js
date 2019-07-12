@@ -1,28 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-
-const Filter = ({ onFilter }) => {
-  const [query, setQuery] = useState('')
-
-  const handleQuery = (e) => {
-    setQuery(e.target.value)
-  }
-
-  useEffect(() => {
-    onFilter(query)
-  })
-
-  return (
-    <div>
-      Filter by name:
-      <input
-        type='search'
-        value={query}
-        onChange={handleQuery}
-      />
-    </div>
-  )
-}
+import Search from './components/Search'
+import AddEntry from './components/AddEntry'
+import Entries from './components/Entries'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -58,27 +38,16 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter onFilter={filterByName} />
+      <Search onFilter={filterByName} />
       <h2>add a new entry</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input onChange={handleNameChange} value={newName} />
-        </div>
-        <div>
-          number: <input onChange={handleNumberChange} value={newNumber} />
-        </div>
-        <div>
-          <button type='submit'>add</button>
-        </div>
-      </form>
+      <AddEntry
+        handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange}
+        handleSubmit={handleSubmit}
+        newName={newName}
+        newNumber={newNumber} />
       <h2>Numbers</h2>
-      <ul>
-        {filtered.map(p => (
-          <li key={p.name}>
-            {p.name}: {p.number}{' '}
-          </li>
-        ))}
-      </ul>
+      <Entries filtered={filtered} />
     </div>
   )
 }
