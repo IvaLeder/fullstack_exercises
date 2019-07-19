@@ -24,8 +24,9 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    persons.find(el => el.name === newName)
-      ? window.alert(`${newName} is already added to phonebook`)
+    const match = persons.find(el => el.name === newName)
+    match
+      ? updateNumber(match)
       : api
         .create(person)
         .then(response => setPersons(persons.concat(response)))
@@ -48,6 +49,17 @@ const App = () => {
       api
         .remove(person)
         .then(response => setPersons(persons.filter(p => p.id !== person.id)))
+    }
+  }
+
+  const updateNumber = person => {
+    if (
+      window.confirm(`${person.name} is already in a phonebook. Update number?`)
+    ) {
+      const data = { ...person, number: newNumber }
+      api.update(person.id, data).then(response => {
+        setPersons(persons.map(p => (response.id === p.id ? response : p)))
+      })
     }
   }
 
