@@ -20,9 +20,13 @@ const App = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
+    const person = {
+      name: newName,
+      number: newNumber
+    }
     persons.find(el => el.name === newName)
       ? window.alert(`${newName} is already added to phonebook`)
-      : setPersons(persons.concat({ name: newName, number: newNumber }))
+      : axios.post('http://localhost:3001/persons', person).then(response => setPersons(persons.concat(response.data)))
   }
 
   const handleNameChange = e => {
