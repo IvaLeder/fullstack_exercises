@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom'
 import Search from './components/Search'
 import AddEntry from './components/AddEntry'
 import Entries from './components/Entries'
-import axios from 'axios'
+import api from './services/api'
 
 const App = () => {
   const [persons, setPersons] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:3001/persons').then(response => {
-      setPersons(response.data)
+    api.getAll().then(response => {
+      setPersons(response)
     })
   }, [])
 
@@ -26,7 +26,7 @@ const App = () => {
     }
     persons.find(el => el.name === newName)
       ? window.alert(`${newName} is already added to phonebook`)
-      : axios.post('http://localhost:3001/persons', person).then(response => setPersons(persons.concat(response.data)))
+      : api.create(person).then(response => setPersons(persons.concat(response)))
   }
 
   const handleNameChange = e => {
