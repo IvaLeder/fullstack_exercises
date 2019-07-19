@@ -26,7 +26,9 @@ const App = () => {
     }
     persons.find(el => el.name === newName)
       ? window.alert(`${newName} is already added to phonebook`)
-      : api.create(person).then(response => setPersons(persons.concat(response)))
+      : api
+        .create(person)
+        .then(response => setPersons(persons.concat(response)))
   }
 
   const handleNameChange = e => {
@@ -37,8 +39,16 @@ const App = () => {
     setNewNumber(e.target.value)
   }
 
-  const filterByName = (query) => {
+  const filterByName = query => {
     setFiltered(persons.filter(p => p.name.includes(query)))
+  }
+
+  const handleDelete = person => {
+    if (window.confirm(`Really delete ${person.name}?`)) {
+      api
+        .remove(person)
+        .then(response => setPersons(persons.filter(p => p.id !== person.id)))
+    }
   }
 
   return (
@@ -51,9 +61,10 @@ const App = () => {
         handleNumberChange={handleNumberChange}
         handleSubmit={handleSubmit}
         newName={newName}
-        newNumber={newNumber} />
+        newNumber={newNumber}
+      />
       <h2>Numbers</h2>
-      <Entries filtered={filtered} />
+      <Entries filtered={filtered} onDelete={handleDelete} />
     </div>
   )
 }
